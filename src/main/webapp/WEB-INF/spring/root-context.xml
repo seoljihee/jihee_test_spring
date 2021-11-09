@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		  <!-- 히카리 커넥션풀 빈 등록 -->
+   <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+      <property name="jdbcUrl" value="jdbc:oracle:thin:@210.221.253.215:1521:xe" />
+      <property name="username" value="g3" />
+      <property name="password" value="1234" />
+   </bean>   
+   <!-- 히카리 데이터소스 빈 등록 -->   
+   <bean id="ds" class="com.zaxxer.hikari.HikariDataSource">
+   <!-- constructor-arg 생성자로 주입해 주겠다. -->
+      <constructor-arg ref="hikariConfig"/>
+   </bean>
+   
+   <!-- 데이터소스 마이바티스에 등록 및 xml 위치 설정 -->
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="dataSource" ref="ds"/>
+      <!--(**) mappers폴더 밑에 모든 폴더와 다른 이름으로 xml파일을 만들어도 되지만
+      끝에는 반드시 Mapper.xml이름으로 설정을 해라.
+      데이터베이스로 전송할수 있는 파일로 인정해주겠다. -->
+      <!--value="classpath:/mappers/**/*Mapper.xml해당하는 경로에 파일을 만든다.  -->
+      <property name="mapperLocations" value="classpath:/mappers/**/*Mapper.xml"/>
+   </bean>
+   <!-- 마이바티스 xml파일과 dao빈 연결  -->
+   <!-- 마이바티스가 base-package에 있는 경로를 보겠다는 이야기이다.  -->
+   <mybatis-spring:scan base-package="com.care.root.member.dao"/>
+	
+	<!-- text에 사용하는 것 -->
+	<bean name="txMgr"
+ class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   <property name="dataSource" ref="ds" />
+</bean>
+		
+		
+</beans>
