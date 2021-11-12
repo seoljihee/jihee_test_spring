@@ -7,11 +7,30 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script src="<%=request.getContextPath()%>/resources/js/daumPost.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+
+function register() {
+   addr1 = $("#addr1").val()
+   addr2 = $("#addr2").val()
+   addr3 = $("#addr3").val()
+   addr = addr1 + "/" + addr2 + "/" + addr3
+   $("#addr1").val(addr)
+   fo.submit()
+}
+
+</script>
+
+
 </head>
 <style>
 #main{
 width:400px;
-height:400px;
+height:600px;
 padding:50px 20px 20px 0px;
 margin-top:50px;
 border : 1px  rgb(155, 155, 155) solid; 
@@ -33,7 +52,7 @@ font-size:small;
    <div>
       <h1 style="text-align:center;margin-bottom:10px">회원가입</h1>
    </div>
-      <form action="member_save" method="post">
+      <form id="fo" action="member_save" method="post">
          <table>
             <tr>
                <td><label>아이디를 입려하세요.</label></td>
@@ -57,10 +76,23 @@ font-size:small;
                <td><label>주소를 입려하세요.</label></td>
             </tr>
             <tr>
-               <td><input type="text" name="addr"></td>
+               <td><input type="text" name="addr" id="addr1" placeholder="우편번호" readonly></td>
+            </tr>
+            
+            
+            <tr>
+               <td><input type="button" onclick="daumPost()" value="우편번호 찾기"></td>
             </tr>
             <tr>
-               <td style="padding-top: 16px;"><input style="padding: 7px 83px 7px 83px; color: white; background-color: black;border-radius: 5px;" type="submit" value="회원가입"></td>
+               <td><input type="text" id="addr2" placeholder="주소" readonly></td>
+            </tr>
+             <tr>
+               <td><input type="text" id="addr3" placeholder="상세주소"></td>
+            </tr>
+            
+            
+            <tr>
+               <td style="padding-top: 16px;"><input style="padding: 7px 83px 7px 83px; color: white; background-color: black;border-radius: 5px;" type="button" onclick="register()" value="회원가입"></td>
             </tr>
          </table>
       </form>

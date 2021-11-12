@@ -7,6 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+	function init() {
+		if("${cook}" == "")
+			window.open("popup","","width=300,height=200,top=500,left=500");
+		
+	}
+</script>
 </head>
 <style>
 *{
@@ -22,7 +29,10 @@ main div{margin-top: 40px;}
 .one{ margin-left: 30px;}
 .two{ margin-left: 10px; }
 </style>
-<body>
+<!-- onload=(함수): 이 페이지가 시작하면 함수를 호출시키겠다. -->
+<body onload="init()"> 
+
+
 <c:import url="../default/header.jsp"/>
 <div class="wrap">
  <main>

@@ -30,20 +30,34 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void info(String id, Model model) {
-		model.addAttribute("memberinfo",mapper.info(id));
+		model.addAttribute("memberinfo",mapper.getMember(id));
 		
 	}
 
 	@Override
 	public int loginChk(HttpServletRequest request) {
-		MemberDTO dto = mapper.loginChk(request.getParameter("id"));
+		MemberDTO dto = mapper.getMember(request.getParameter("id"));
 		if(dto != null) {
 			if(request.getParameter("pwd").equals(dto.getPwd())) {
 				return 0;
+			}else {
+				return -1;
 			}
 		}
 		return 1;
 		
+	}
+
+	@Override
+	public int update(MemberDTO dto) {
+		int result = mapper.update(dto);
+		return result;
+	}
+
+	@Override
+	public int del(String id) {
+		int result = mapper.del(id);
+		return result;
 	}
 
 	

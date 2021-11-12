@@ -22,7 +22,16 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.care.root" />
-	
+	<beans:bean id="ci" class="com.care.root.common.interceptor.CommonInterceptor"/>   
+    <interceptors>
+      <interceptor>
+        <mapping path="/member/memberview"/>
+        <mapping path="/board/list"/> 
+        <beans:ref bean="ci"/> 
+      </interceptor>
+    </interceptors>
+    
+   
 	
 	
 </beans:beans>

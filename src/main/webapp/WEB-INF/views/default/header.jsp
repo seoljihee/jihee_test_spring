@@ -53,10 +53,17 @@ nav ul li a:hover{
             </div>
             <nav>
                 <ul>
-                 <li><a href="login">HOME</a></li>
-                 <li><a href="memberview">MEMBER_SHIP</a></li>
-                 <li><a href="#">BOARD</a></li>
-                 <li><a href="logout">LOGOUT</a></li>
+                 <li><a href="${contextPath }/member/main">HOME</a></li>
+                 <li><a href="${contextPath }/member/memberview">MEMBER_SHIP</a></li>
+                 <li><a href="${contextPath }/board/list">BOARD</a></li>
+                 <c:choose>
+                 	<c:when test="${LOGIN != null}">
+         		        <li><a href="${contextPath }/member/logout">LOGOUT</a></li>
+                 	</c:when>
+                 	<c:otherwise>
+                 		<li><a href="${contextPath }/member/login">LOGIN</a></li>
+                 	</c:otherwise>
+                 </c:choose>
                 </ul>
             </nav>
         </div>

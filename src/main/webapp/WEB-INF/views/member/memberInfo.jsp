@@ -60,11 +60,11 @@ font-size:small;
             </tr>
             <tr>
                <td style="padding-top: 16px;">
-               <button style="padding: 7px 95px 7px 95px; color: white; background-color: black;border-radius: 5px;" type="button" onclick="location.href='${contextPath}/member/MemberInfo2.jsp?id=${dto.id}'">수정</button></td>
+               <button style="padding: 7px 95px 7px 95px; color: white; background-color: black;border-radius: 5px;" type="button" onclick="location.href='memberInfo2?id=${memberinfo.id}'">수정</button></td>
             </tr>
             <tr>
                <td style="padding-top: 16px;">
-               <button style="padding: 7px 95px 7px 95px; color: white; background-color: black;border-radius: 5px;" type="button" onclick="location.href='${contextPath}/member/delete.jsp?id=${dto.id}'">삭제</button></td>
+               <button style="padding: 7px 95px 7px 95px; color: white; background-color: black;border-radius: 5px;" type="button" onclick="location.href='delete?id=${memberinfo.id}'">삭제</button></td>
             </tr>
          </table>
       </form>

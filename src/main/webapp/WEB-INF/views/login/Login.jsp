@@ -24,11 +24,25 @@ border-radius: 5px;
 #div2 a{color:red; font-size:small;}
 #div2{margin: 40px 20px 15px 30px;}
 </style>
+<script type="text/javascript">
+ function chk(result){
+	 if(result == -1){
+		 alert('비밀번호가 일치하지 않음!!!')
+		 location.href = 'login';
+	 }else if(result == 1){
+		 alert('존재하지 않는 아이디 입니다. 회원가입 진행해 주세요.')
+		 location.href = 'memberShipview';
+	 }
+ }
+</script>
 <body>
 <c:import url="../default/header.jsp"/>
 <div class="wrap">
 <div id="login_main">
 <h1>LOGIN</h1>
+<c:choose>
+	<c:when test="${LOGIN == null}">
+	<script type="text/javascript">chk(${result});</script>
    <form action="loginChk" method="post">
    <table>
       <tr>
@@ -55,6 +69,15 @@ border-radius: 5px;
    <div id="div2">
       <h4><a href="#">아이디와 비밀번호를 잃어버리셨나요?</a></h4>
    </div>
+	</c:when>
+	<c:otherwise>
+		<script type="text/javascript">
+			alert('${LOGIN}님 환영합니다!!!!')
+			location.href="main"
+		</script>
+		
+	</c:otherwise>
+   </c:choose>
 </div>
 </div>
 <c:import url="../default/footer.jsp"/>

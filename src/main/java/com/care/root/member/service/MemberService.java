@@ -11,4 +11,6 @@ public interface MemberService {
 	public void memberview(Model model);
 	public void info(String id,Model model);
 	public int loginChk(HttpServletRequest request);
+	public int update(MemberDTO dto);
+	public int del(String id);
 }
