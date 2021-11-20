@@ -3,6 +3,7 @@ package com.care.root.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +52,7 @@ public class MemberController implements MemberSessionName{
 	public String logout(HttpSession session) {
 		if(session.getAttribute(LOGIN) != null) {
 			session.invalidate();
+			//session.removeAttribute(LOGIN);
 		}
 		return "redirect:login";
 	}
@@ -73,21 +76,50 @@ public class MemberController implements MemberSessionName{
 	}
 	
 	@PostMapping("loginChk")		//login버튼을 눌렀을 때 
-	public String loginChk(HttpServletRequest request,HttpSession session,@RequestParam("id") String id,
+	public String loginChk(@RequestParam("id") String id,
+							@RequestParam("pwd") String pwd,
+							@RequestParam(required = false) String autoLogin,
 							RedirectAttributes re) {
-		int result = ms.loginChk(request);
+		System.out.println("loginch :"+ id);
+		int result = ms.loginChk(id,pwd);
 		if(result == 0) {
-			session.setAttribute("LOGIN",id);
+			re.addAttribute("id",id);
+			re.addAttribute("autoLogin",autoLogin);
+			return "redirect:successLogin";
 		}
-		re.addFlashAttribute("result",result);
 		return "redirect:login";
 	}
 	
+	@GetMapping("successLogin")
+	public String successLogin(@RequestParam String id,
+								@RequestParam(required = false) String autoLogin,
+								HttpSession session,
+								HttpServletResponse response) {
+		System.out.println("successLogin :"+ id);
+		if(autoLogin != null) {
+			int limitTime = 60*60*24*90;
+			Cookie loginCookie = new Cookie("loginCookie",session.getId());
+			loginCookie.setMaxAge(limitTime);
+			loginCookie.setPath("/");
+			response.addCookie(loginCookie);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(new java.util.Date());
+			cal.add(Calendar.MONTH, 3);
+			
+			
+			java.sql.Date limitDate = new java.sql.Date(cal.getTimeInMillis());
+		}
+		
+		session.setAttribute(LOGIN, id);
+		
+		return "redirect:main";
+	}
 
 	
-	@PostMapping("member_save")
+	@PostMapping("member_save")		//회원가입 버튼을 누르면 오는 곳
 	public String member_save(MemberDTO dto) {
-		ms.memberSave(dto);
+		int result = ms.memberSave(dto);
 		return "redirect:login";
 	}
 	

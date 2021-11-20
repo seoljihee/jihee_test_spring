@@ -61,7 +61,8 @@ border-radius: 5px;
       <tr style="line-height:40px;">
          
          <td style="text-align:right; margin-top:20px;" colspan="2">
-         <a href="memberShipview">회원가입</a>
+         <a href="memberShipview">회원가입</a>&nbsp;&nbsp;
+         <input type="checkbox" name="autoLogin">로그인 유지
          </td>
       </tr>
    </table>

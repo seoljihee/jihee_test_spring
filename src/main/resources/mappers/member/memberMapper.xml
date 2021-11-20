@@ -7,31 +7,37 @@
   <mapper namespace="com.care.root.member.dao.MemberDAO">
   
   <insert id="memberSave">
-  	insert into jsp_member values(#{id},#{pwd},#{name},#{addr})
+  	insert into membership(id,pw,name,addr) values(#{id},#{pwd},#{name},#{addr})
   </insert>
   
   <resultMap id="member" type="com.care.root.member.dto.MemberDTO">
   	<result property="id" column="id"/>
-  	<result property="pwd" column="pwd"/>
+  	<result property="pwd" column="pw"/>
   	<result property="name" column="name"/>
   	<result property="addr" column="addr"/>  
   </resultMap>
   
   <select id="memberview" resultMap="member">
-  	select * from jsp_member
+  	select * from membership
   </select>
   
   
   <select id="getMember" resultMap="member">
-  	select * from jsp_member where id=#{id}
+  	select * from membership where id=#{id}
   </select>
   
   <update id="update">
-  	update jsp_member set pwd=#{pwd},name=#{name},addr=#{addr} where id=#{id} 
+  	update membership set pw=#{pwd},name=#{name},addr=#{addr} where id=#{id} 
   </update>
   
   <delete id="del">
-  	delete from jsp_member where id=#{id}
+  	delete from membership where id=#{id}
   </delete>
+  
+  <select id="getUserSessionId" resultMap="member">
+  	select * from membership where session_id=#{sessionId}
+  </select>
+  
+  
  
   </mapper>
